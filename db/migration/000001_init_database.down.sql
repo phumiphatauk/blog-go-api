@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS user_role;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS sub_district;
+DROP TABLE IF EXISTS district;
+DROP TABLE IF EXISTS province;
+DROP TABLE IF EXISTS geographies;
+DROP TABLE IF EXISTS role_permission;
+DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS permission;
+DROP TABLE IF EXISTS permission_group;

@@ -1,0 +1,1 @@
+INSERT INTO "role" (id, name, created_at, updated_at, deleted) VALUES (1, 'Administrator', NOW()::TIMESTAMP, NOW()::TIMESTAMP, false);

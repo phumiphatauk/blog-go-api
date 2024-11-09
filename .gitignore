@@ -1,0 +1,15 @@
+.vscode
+
+# Log file
+*.log
+
+# Build file
+blog-go-api
+
+# Image
+image/*
+
+# Database in local
+data-db/*
+data-minio/*
+
