@@ -23,6 +23,18 @@ type GetAllBlogResponse struct {
 	BlogTags []db.GetBlogTagByBlogIdRow `json:"blog_tags"`
 }
 
+// GetAllBlog godoc
+//
+//	@Summary		Get All Blog
+//	@Description	Get All Blog
+//	@Tags			Blog
+//	@Accept			json
+//	@Produce		json
+//	@Param			name		query		string	false	"Blog Name"
+//	@Param			page_id		query		int		true	"Page ID"
+//	@Param			page_size	query		int		true	"Page Size"
+//	@Success		200			{object}	jsonResponseWithPaginate
+//	@Router			/api/blog [get]
 func (server *Server) GetAllBlog(ctx *gin.Context) {
 
 	var req GetAllBlogRequest
@@ -88,6 +100,19 @@ type GetAllBlogWithTagResponse struct {
 	BlogTags []db.GetBlogTagByBlogIdRow `json:"blog_tags"`
 }
 
+// GetAllBlogWithTag godoc
+//
+//	@Summary		Get All Blog With Tag
+//	@Description	Get All Blog With Tag
+//	@Tags			Blog
+//	@Accept			json
+//	@Produce		json
+//	@Param			title		query		string	false	"Blog Title"
+//	@Param			tag			query		string	false	"Tag Name"
+//	@Param			page_id		query		int		true	"Page ID"
+//	@Param			page_size	query		int		true	"Page Size"
+//	@Success		200			{object}	jsonResponseWithPaginate
+//	@Router			/api/blog/tag [get]
 func (server *Server) GetAllBlogWithTag(ctx *gin.Context) {
 
 	var req GetAllBlogWithTagRequest
@@ -156,6 +181,16 @@ type GetBlogByUrlResponse struct {
 	BlogTags []db.GetBlogTagByBlogIdRow `json:"blog_tags"`
 }
 
+// GetBlogByUrl godoc
+//
+//	@Summary		Get Blog By URL
+//	@Description	Get Blog By URL
+//	@Tags			Blog
+//	@Accept			json
+//	@Produce		json
+//	@Param			url	path		string	true	"Blog URL"
+//	@Success		200	{object}	jsonResponse
+//	@Router			/api/blog/{url} [get]
 func (server *Server) GetBlogByUrl(ctx *gin.Context) {
 	var req GetBlogByUrlRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
@@ -192,6 +227,17 @@ type GetBlogByIDResponse struct {
 	BlogTags []db.GetBlogTagByBlogIdRow `json:"blog_tags"`
 }
 
+// GetBlogByID godoc
+//
+//	@Summary		Get Blog By ID
+//	@Description	Get Blog By ID
+//	@Tags			Blog
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	query		int	true	"Blog ID"
+//	@Success		200	{object}	jsonResponse
+//	@Router			/api/blog/id [get]
+//	@Security		BearerAuth
 func (server *Server) GetBlogByID(ctx *gin.Context) {
 	var req GetBlogByIDRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
@@ -243,6 +289,17 @@ type CreateBlogByIdResponse struct {
 	BlogTags []db.GetBlogTagByBlogIdRow `json:"blog_tags"`
 }
 
+// CreateBlog godoc
+//
+//	@Summary		Create Blog
+//	@Description	Create Blog
+//	@Tags			Blog
+//	@Accept			json
+//	@Produce		json
+//	@Param			input	body		CreateBlogRequest	true	"Create information"
+//	@Success		200		{object}	jsonResponse
+//	@Router			/api/blog [post]
+//	@Security		BearerAuth
 func (server *Server) CreateBlog(ctx *gin.Context) {
 	var req CreateBlogRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -341,6 +398,17 @@ type UpdateBlogResponse struct {
 	BlogTags []db.GetBlogTagByBlogIdRow `json:"blog_tags"`
 }
 
+// UpdateBlog godoc
+//
+//	@Summary		Update Blog
+//	@Description	Update Blog
+//	@Tags			Blog
+//	@Accept			json
+//	@Produce		json
+//	@Param			input	body		UpdateBlogRequest	true	"Update information"
+//	@Success		200		{object}	jsonResponse
+//	@Router			/api/blog [put]
+//	@Security		BearerAuth
 func (server *Server) UpdateBlog(ctx *gin.Context) {
 	var req UpdateBlogRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -458,6 +526,17 @@ type DeleteBlogRequest struct {
 	ID int64 `uri:"id" binding:"required,min=1"`
 }
 
+// DeleteBlog godoc
+//
+//	@Summary		Delete Blog
+//	@Description	Delete Blog
+//	@Tags			Blog
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path		int	true	"Blog ID"
+//	@Success		200	{object}	jsonResponse
+//	@Router			/api/blog/{id} [delete]
+//	@Security		BearerAuth
 func (server *Server) DeleteBlog(ctx *gin.Context) {
 	var req DeleteBlogRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {

@@ -6,11 +6,14 @@ import (
 
 	"blog-go-api/constants"
 	db "blog-go-api/db/sqlc"
+	_ "blog-go-api/docs"
 	"blog-go-api/token"
 	"blog-go-api/util"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // Server serves HTTP requests for our banking service.
@@ -133,8 +136,8 @@ func (server *Server) setupRouter() {
 	routerGroup.PUT("/api/blog", authMiddleware(*server, &[]string{constants.PermissionEditBlog.Code}), server.UpdateBlog)
 	routerGroup.DELETE("/api/blog/:id", authMiddleware(*server, &[]string{constants.PermissionEditBlog.Code}), server.DeleteBlog)
 
-	// Statistic
-	// router.Static("/api/image", "./image")
+	// Swagger
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	server.router = router
 }

@@ -106,4 +106,7 @@ stop:
 ## restart: stops and starts the running application
 restart: stop run
 
-.PHONY: postgres minio postgresdown migrate migrateup migrateup1 migratedown migratedown1 sqlc build run stop restart
+swag:
+	swag init
+
+.PHONY: postgres minio postgresdown migrate migrateup migrateup1 migratedown migratedown1 sqlc build run stop restart swag

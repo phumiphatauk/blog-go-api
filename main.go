@@ -21,6 +21,18 @@ import (
 // main is the entry point of the application.
 // It loads the configuration, establishes a connection to the database,
 // runs database migrations, creates a new store, and starts the Gin server.
+
+// @title Blog Go API
+// @version 1.0
+// @description This is a Blog Go API server.
+// @contact.name API Support
+// @contact.url http://somewhere.com/support
+// @contact.email support@somewhere.com
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @securityDefinitions.apikey	BearerAuth
+// @in							header
+// @name						authorization
 func main() {
 	// Load the configuration from the current directory.
 	config, err := util.LoadConfig(".")

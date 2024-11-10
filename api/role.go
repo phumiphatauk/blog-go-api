@@ -14,6 +14,19 @@ type GetAllRoleRequest struct {
 	PageSize int32  `form:"page_size" binding:"required,min=5,max=10"`
 }
 
+// GetAllRole godoc
+//
+//	@Summary		Get All Role
+//	@Description	Get All Role
+//	@Tags			Role
+//	@Accept			json
+//	@Produce		json
+//	@Param			name		query		string	false	"Role Name"
+//	@Param			page_id		query		int		true	"Page ID"
+//	@Param			page_size	query		int		true	"Page Size"
+//	@Success		200			{object}	jsonResponseWithPaginate
+//	@Router			/api/role [get]
+//	@Security		BearerAuth
 func (server *Server) GetAllRole(ctx *gin.Context) {
 
 	var req GetAllRoleRequest
@@ -56,6 +69,17 @@ type GetRoleByIdRequest struct {
 	ID int64 `uri:"id" binding:"required,min=1"`
 }
 
+// GetRoleById godoc
+//
+//	@Summary		Get Role By ID
+//	@Description	Get Role By ID
+//	@Tags			Role
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path		int	true	"Role ID"
+//	@Success		200	{object}	jsonResponse
+//	@Router			/api/role/{id} [get]
+//	@Security		BearerAuth
 func (server *Server) GetRoleById(ctx *gin.Context) {
 
 	var req GetRoleByIdRequest
@@ -82,6 +106,17 @@ type CreateRoleRequest struct {
 	PermissionGroups []getAllPermissionGroupData `json:"permission_groups"`
 }
 
+// CreateRole godoc
+//
+//	@Summary		Create Role
+//	@Description	Create Role
+//	@Tags			Role
+//	@Accept			json
+//	@Produce		json
+//	@Param			input	body		CreateRoleRequest	true	"Role Information"
+//	@Success		200		{object}	jsonResponse
+//	@Router			/api/role [post]
+//	@Security		BearerAuth
 func (server *Server) CreateRole(ctx *gin.Context) {
 
 	var req CreateRoleRequest
@@ -130,6 +165,17 @@ type UpdateRoleRequest struct {
 	PermissionGroups []getAllPermissionGroupData `json:"permission_groups"`
 }
 
+// UpdateRole godoc
+//
+//	@Summary		Update Role
+//	@Description	Update Role
+//	@Tags			Role
+//	@Accept			json
+//	@Produce		json
+//	@Param			input	body		UpdateRoleRequest	true	"Role Information"
+//	@Success		200		{object}	jsonResponse
+//	@Router			/api/role [put]
+//	@Security		BearerAuth
 func (server *Server) UpdateRole(ctx *gin.Context) {
 
 	var req UpdateRoleRequest
@@ -201,6 +247,17 @@ type DeleteRoleRequest struct {
 	ID int64 `uri:"id" binding:"required,min=1"`
 }
 
+// DeleteRole godoc
+//
+//	@Summary		Delete Role
+//	@Description	Delete Role
+//	@Tags			Role
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path		int	true	"Role ID"
+//	@Success		200	{object}	jsonResponse
+//	@Router			/api/role/{id} [delete]
+//	@Security		BearerAuth
 func (server *Server) DeleteRole(ctx *gin.Context) {
 
 	var req DeleteRoleRequest
@@ -230,6 +287,16 @@ func (server *Server) DeleteRole(ctx *gin.Context) {
 	})
 }
 
+// GetRoleForDropDownList godoc
+//
+//	@Summary		Get Role For Drop Down List
+//	@Description	Get Role For Drop Down List
+//	@Tags			Role
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	jsonResponse
+//	@Router			/api/role/dropdownlist [get]
+//	@Security		BearerAuth
 func (Server *Server) GetRoleForDropDownList(ctx *gin.Context) {
 
 	roles, err := Server.store.GetRoleForDropDownList(ctx)

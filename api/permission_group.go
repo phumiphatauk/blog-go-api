@@ -24,6 +24,17 @@ func GetAllPermissionGroupResponse(permissionGroup db.PermissionGroup, permissio
 	}
 }
 
+// GetAllPermissionGroup godoc
+//
+//	@Summary		Get All Permission Group
+//	@Description	Get All Permission Group
+//	@Tags			Permission Group
+//	@Accept			json
+//	@Produce		json
+//	@Param			role_id	query		int	false	"Role ID"
+//	@Success		200		{object}	jsonResponse
+//	@Router			/api/permission_group [get]
+//	@Security		BearerAuth
 func (server *Server) GetAllPermissionGroup(ctx *gin.Context) {
 	// Get User from Token
 	var req getAllPermissionGroupRequest

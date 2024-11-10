@@ -29,6 +29,14 @@ type loginUserResponse struct {
 	Permissions           []string     `json:"permissions"`
 }
 
+//	@Summary		Login
+//	@Description	Login to the system
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			input	body		loginUserRequest	true	"Login information"
+//	@Success		200		{object}	loginUserResponse
+//	@Router			/api/login [post]
 func (server *Server) loginUser(ctx *gin.Context) {
 	var req loginUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -116,6 +124,14 @@ type forgotPasswordRequest struct {
 	Email string `json:"email" binding:"required,email"`
 }
 
+//	@Summary		Forgot Password
+//	@Description	Forgot password
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			input	body		forgotPasswordRequest	true	"Email information"
+//	@Success		200		{object}	interface{}
+//	@Router			/api/forgot-password [post]
 func (server *Server) forgotPassword(ctx *gin.Context) {
 	var req forgotPasswordRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -208,6 +224,14 @@ type resetPasswordDetailResponse struct {
 	LastName  string `json:"last_name"`
 }
 
+//	@Summary		Reset Password Detail
+//	@Description	Get reset password detail
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			token	query		string	true	"Token"
+//	@Success		200		{object}	resetPasswordDetailResponse
+//	@Router			/api/reset_password [get]
 func (server *Server) resetPasswordDetail(ctx *gin.Context) {
 	var req resetPasswordDetailRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
@@ -250,6 +274,14 @@ type resetPasswordRequest struct {
 	Password string `json:"password" binding:"required,min=8"`
 }
 
+//	@Summary		Reset Password
+//	@Description	Reset password
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			input	body		resetPasswordRequest	true	"Reset password information"
+//	@Success		200		{object}	interface{}
+//	@Router			/api/reset_password [post]
 func (server *Server) resetPassword(ctx *gin.Context) {
 	var req resetPasswordRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {

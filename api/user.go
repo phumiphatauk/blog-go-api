@@ -48,6 +48,14 @@ func newUserResponse(user db.User) userResponse {
 	}
 }
 
+// @Summary		Sign up
+// @Description	Create a new user
+// @Tags			Auth
+// @Accept			json
+// @Produce		json
+// @Param			input	body		createUserRequest	true	"User information"
+// @Success		200		{object}	jsonResponse
+// @Router			/api/signup [post]
 func (server *Server) createUser(ctx *gin.Context) {
 	var req createUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -139,6 +147,15 @@ type updateResponse struct {
 	CreatedAt         time.Time `json:"created_at"`
 }
 
+// @Summary		Update user
+// @Description	Update a user
+// @Tags			User
+// @Accept			json
+// @Produce		json
+// @Param			input	body		updateUserRequest	true	"User information"
+// @Success		200		{object}	jsonResponse
+// @Router			/api/users [put]
+// @Security		BearerAuth
 func (server *Server) updateUser(ctx *gin.Context) {
 	var req updateUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -243,6 +260,16 @@ type listUserResponse struct {
 	Roles []db.GetRoleByUserIdRow `json:"roles"`
 }
 
+// @Summary		List users
+// @Description	Get a list of users
+// @Tags			User
+// @Accept			json
+// @Produce		json
+// @Param			page_id		query		int	true	"Page ID"
+// @Param			page_size	query		int	true	"Page Size"
+// @Success		200			{object}	jsonResponseWithPaginate
+// @Security		BearerAuth
+// @Router			/api/users [get]
 func (server *Server) listUser(ctx *gin.Context) {
 	var req listUserRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
@@ -306,6 +333,15 @@ type getUserResponse struct {
 	Roles []db.GetRoleByUserIdRow `json:"roles"`
 }
 
+// @Summary		Get user
+// @Description	Get a user by ID
+// @Tags			User
+// @Accept			json
+// @Produce		json
+// @Param			id	path		int	true	"User ID"
+// @Success		200	{object}	jsonResponse
+// @Router			/api/users/{id} [get]
+// @Security		BearerAuth
 func (server *Server) getUser(ctx *gin.Context) {
 	var req getUser
 	if err := ctx.ShouldBindUri(&req); err != nil {
@@ -356,6 +392,15 @@ type deleteUser struct {
 	ID int64 `uri:"id" binding:"required,min=1"`
 }
 
+// @Summary		Delete user
+// @Description	Delete a user by ID
+// @Tags			User
+// @Accept			json
+// @Produce		json
+// @Param			id	path		int	true	"User ID"
+// @Success		200	{object}	jsonResponse
+// @Router			/api/users/{id} [delete]
+// @Security		BearerAuth
 func (server *Server) deleteUser(ctx *gin.Context) {
 	var req deleteUser
 	if err := ctx.ShouldBindUri(&req); err != nil {

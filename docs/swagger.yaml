@@ -1,0 +1,1076 @@
+definitions:
+  api.BlogTagRequest:
+    properties:
+      blog_id:
+        minimum: 1
+        type: integer
+      deleted:
+        type: boolean
+      id:
+        minimum: 1
+        type: integer
+      tag_id:
+        minimum: 1
+        type: integer
+    required:
+    - blog_id
+    - id
+    - tag_id
+    type: object
+  api.ChangePasswordRequest:
+    properties:
+      new_password:
+        minLength: 8
+        type: string
+      old_password:
+        minLength: 8
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  api.CreateBlogRequest:
+    properties:
+      blog_tags:
+        items:
+          $ref: '#/definitions/api.BlogTagRequest'
+        type: array
+      content:
+        type: string
+      image:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    required:
+    - content
+    - image
+    - title
+    - url
+    type: object
+  api.CreateRoleRequest:
+    properties:
+      name:
+        type: string
+      permission_groups:
+        items:
+          $ref: '#/definitions/api.getAllPermissionGroupData'
+        type: array
+    required:
+    - name
+    type: object
+  api.CreateTagRequest:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  api.UpdateBlogRequest:
+    properties:
+      blog_tags:
+        items:
+          $ref: '#/definitions/api.BlogTagRequest'
+        type: array
+      content:
+        type: string
+      id:
+        minimum: 1
+        type: integer
+      image:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    required:
+    - content
+    - id
+    - image
+    - title
+    - url
+    type: object
+  api.UpdateRoleRequest:
+    properties:
+      id:
+        minimum: 1
+        type: integer
+      name:
+        type: string
+      permission_groups:
+        items:
+          $ref: '#/definitions/api.getAllPermissionGroupData'
+        type: array
+    required:
+    - id
+    - name
+    type: object
+  api.UpdateTagRequest:
+    properties:
+      id:
+        minimum: 1
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  api.createUserRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      phone:
+        minLength: 10
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    - password
+    - phone
+    - username
+    type: object
+  api.forgotPasswordRequest:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  api.getAllPermissionGroupData:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      permissions:
+        items:
+          $ref: '#/definitions/db.GetPermissionByPermissionGroupIdAndRoleIdRow'
+        type: array
+    type: object
+  api.jsonResponse:
+    properties:
+      data: {}
+      error:
+        type: boolean
+      message:
+        type: string
+    type: object
+  api.jsonResponseWithPaginate:
+    properties:
+      data: {}
+      error:
+        type: boolean
+      message:
+        type: string
+      total:
+        type: integer
+    type: object
+  api.loginUserRequest:
+    properties:
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  api.loginUserResponse:
+    properties:
+      access_token:
+        type: string
+      access_token_expires_at:
+        type: string
+      permissions:
+        items:
+          type: string
+        type: array
+      refresh_token:
+        type: string
+      refresh_token_expires_at:
+        type: string
+      session_id:
+        type: string
+      user:
+        $ref: '#/definitions/api.userResponse'
+    type: object
+  api.renewAccessTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  api.renewAccessTokenResponse:
+    properties:
+      access_token:
+        type: string
+      access_token_expires_at:
+        type: string
+    type: object
+  api.resetPasswordDetailResponse:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+    type: object
+  api.resetPasswordRequest:
+    properties:
+      password:
+        minLength: 8
+        type: string
+      token:
+        type: string
+    required:
+    - password
+    - token
+    type: object
+  api.updateUserRequest:
+    properties:
+      description:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        minimum: 1
+        type: integer
+      last_name:
+        type: string
+      phone:
+        type: string
+      roles:
+        items:
+          type: integer
+        type: array
+    required:
+    - id
+    type: object
+  api.userResponse:
+    properties:
+      code:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password_changed_at:
+        type: string
+      phone:
+        type: string
+      username:
+        type: string
+    type: object
+  db.GetPermissionByPermissionGroupIdAndRoleIdRow:
+    properties:
+      id:
+        type: integer
+      is_assigned:
+        type: boolean
+      name:
+        type: string
+    type: object
+info:
+  contact:
+    email: support@somewhere.com
+    name: API Support
+    url: http://somewhere.com/support
+  description: This is a Blog Go API server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Blog Go API
+  version: "1.0"
+paths:
+  /api/blog:
+    get:
+      consumes:
+      - application/json
+      description: Get All Blog
+      parameters:
+      - description: Blog Name
+        in: query
+        name: name
+        type: string
+      - description: Page ID
+        in: query
+        name: page_id
+        required: true
+        type: integer
+      - description: Page Size
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponseWithPaginate'
+      summary: Get All Blog
+      tags:
+      - Blog
+    post:
+      consumes:
+      - application/json
+      description: Create Blog
+      parameters:
+      - description: Create information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.CreateBlogRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Create Blog
+      tags:
+      - Blog
+    put:
+      consumes:
+      - application/json
+      description: Update Blog
+      parameters:
+      - description: Update information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.UpdateBlogRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Update Blog
+      tags:
+      - Blog
+  /api/blog/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Blog
+      parameters:
+      - description: Blog ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete Blog
+      tags:
+      - Blog
+  /api/blog/{url}:
+    get:
+      consumes:
+      - application/json
+      description: Get Blog By URL
+      parameters:
+      - description: Blog URL
+        in: path
+        name: url
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      summary: Get Blog By URL
+      tags:
+      - Blog
+  /api/blog/id:
+    get:
+      consumes:
+      - application/json
+      description: Get Blog By ID
+      parameters:
+      - description: Blog ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Get Blog By ID
+      tags:
+      - Blog
+  /api/blog/tag:
+    get:
+      consumes:
+      - application/json
+      description: Get All Blog With Tag
+      parameters:
+      - description: Blog Title
+        in: query
+        name: title
+        type: string
+      - description: Tag Name
+        in: query
+        name: tag
+        type: string
+      - description: Page ID
+        in: query
+        name: page_id
+        required: true
+        type: integer
+      - description: Page Size
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponseWithPaginate'
+      summary: Get All Blog With Tag
+      tags:
+      - Blog
+  /api/forgot-password:
+    post:
+      consumes:
+      - application/json
+      description: Forgot password
+      parameters:
+      - description: Email information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.forgotPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema: {}
+      summary: Forgot Password
+      tags:
+      - Auth
+  /api/login:
+    post:
+      consumes:
+      - application/json
+      description: Login to the system
+      parameters:
+      - description: Login information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.loginUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.loginUserResponse'
+      summary: Login
+      tags:
+      - Auth
+  /api/permission_group:
+    get:
+      consumes:
+      - application/json
+      description: Get All Permission Group
+      parameters:
+      - description: Role ID
+        in: query
+        name: role_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Get All Permission Group
+      tags:
+      - Permission Group
+  /api/profile:
+    get:
+      consumes:
+      - application/json
+      description: Get Profile
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.userResponse'
+      security:
+      - BearerAuth: []
+      summary: Get Profile
+      tags:
+      - Profile
+    put:
+      consumes:
+      - application/json
+      description: Update Profile
+      parameters:
+      - description: Update information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.updateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.userResponse'
+      security:
+      - BearerAuth: []
+      summary: Update Profile
+      tags:
+      - Profile
+  /api/profile/change_password:
+    put:
+      consumes:
+      - application/json
+      description: Change Password
+      parameters:
+      - description: Change Password
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema: {}
+      security:
+      - BearerAuth: []
+      summary: Change Password
+      tags:
+      - Profile
+  /api/reset_password:
+    get:
+      consumes:
+      - application/json
+      description: Get reset password detail
+      parameters:
+      - description: Token
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.resetPasswordDetailResponse'
+      summary: Reset Password Detail
+      tags:
+      - Auth
+    post:
+      consumes:
+      - application/json
+      description: Reset password
+      parameters:
+      - description: Reset password information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.resetPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema: {}
+      summary: Reset Password
+      tags:
+      - Auth
+  /api/role:
+    get:
+      consumes:
+      - application/json
+      description: Get All Role
+      parameters:
+      - description: Role Name
+        in: query
+        name: name
+        type: string
+      - description: Page ID
+        in: query
+        name: page_id
+        required: true
+        type: integer
+      - description: Page Size
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponseWithPaginate'
+      security:
+      - BearerAuth: []
+      summary: Get All Role
+      tags:
+      - Role
+    post:
+      consumes:
+      - application/json
+      description: Create Role
+      parameters:
+      - description: Role Information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.CreateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Create Role
+      tags:
+      - Role
+    put:
+      consumes:
+      - application/json
+      description: Update Role
+      parameters:
+      - description: Role Information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.UpdateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Update Role
+      tags:
+      - Role
+  /api/role/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Role
+      parameters:
+      - description: Role ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete Role
+      tags:
+      - Role
+    get:
+      consumes:
+      - application/json
+      description: Get Role By ID
+      parameters:
+      - description: Role ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Get Role By ID
+      tags:
+      - Role
+  /api/role/dropdownlist:
+    get:
+      consumes:
+      - application/json
+      description: Get Role For Drop Down List
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Get Role For Drop Down List
+      tags:
+      - Role
+  /api/signup:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: User information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.createUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      summary: Sign up
+      tags:
+      - Auth
+  /api/tag:
+    get:
+      consumes:
+      - application/json
+      description: Get All Tag
+      parameters:
+      - description: Tag Name
+        in: query
+        name: name
+        type: string
+      - description: Page ID
+        in: query
+        name: page_id
+        required: true
+        type: integer
+      - description: Page Size
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponseWithPaginate'
+      security:
+      - BearerAuth: []
+      summary: Get All Tag
+      tags:
+      - Tag
+    post:
+      consumes:
+      - application/json
+      description: Create Tag
+      parameters:
+      - description: Create Tag
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.CreateTagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Create Tag
+      tags:
+      - Tag
+    put:
+      consumes:
+      - application/json
+      description: Update Tag
+      parameters:
+      - description: Update Tag
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.UpdateTagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Update Tag
+      tags:
+      - Tag
+  /api/tag/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Tag
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete Tag
+      tags:
+      - Tag
+    get:
+      consumes:
+      - application/json
+      description: Get Tag By ID
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Get Tag By ID
+      tags:
+      - Tag
+  /api/tokens/renew_access:
+    post:
+      consumes:
+      - application/json
+      description: Renew Access Token
+      parameters:
+      - description: Refresh Token
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.renewAccessTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.renewAccessTokenResponse'
+      summary: Renew Access Token
+      tags:
+      - Auth
+  /api/users:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of users
+      parameters:
+      - description: Page ID
+        in: query
+        name: page_id
+        required: true
+        type: integer
+      - description: Page Size
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponseWithPaginate'
+      security:
+      - BearerAuth: []
+      summary: List users
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Update a user
+      parameters:
+      - description: User information
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/api.updateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Update user
+      tags:
+      - User
+  /api/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete user
+      tags:
+      - User
+    get:
+      consumes:
+      - application/json
+      description: Get a user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.jsonResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user
+      tags:
+      - User
+  /api/version:
+    get:
+      consumes:
+      - application/json
+      description: Get the current version of the API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get API version
+      tags:
+      - Version
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: authorization
+    type: apiKey
+swagger: "2.0"

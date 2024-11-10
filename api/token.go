@@ -20,6 +20,14 @@ type renewAccessTokenResponse struct {
 	AccessTokenExpiresAt time.Time `json:"access_token_expires_at"`
 }
 
+//	@Summary		Renew Access Token
+//	@Description	Renew Access Token
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			input	body		renewAccessTokenRequest	true	"Refresh Token"
+//	@Success		200		{object}	renewAccessTokenResponse
+//	@Router			/api/tokens/renew_access [post]
 func (server *Server) renewAccessToken(ctx *gin.Context) {
 	var req renewAccessTokenRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {

@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary		Get Profile
+// @Description	Get Profile
+// @Tags			Profile
+// @Accept			json
+// @Produce		json
+// @Success		200	{object}	userResponse
+// @Router			/api/profile [get]
+// @Security		BearerAuth
 func (server *Server) GetProfile(ctx *gin.Context) {
 	userId, err := getUserFromContext(*server, ctx)
 	if err != nil {
@@ -36,6 +44,15 @@ func (server *Server) GetProfile(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, payload)
 }
 
+// @Summary		Update Profile
+// @Description	Update Profile
+// @Tags			Profile
+// @Accept			json
+// @Produce		json
+// @Param			input	body		updateUserRequest	true	"Update information"
+// @Success		200		{object}	userResponse
+// @Router			/api/profile [put]
+// @Security		BearerAuth
 func (server *Server) UpdateProfile(ctx *gin.Context) {
 	userId, err := getUserFromContext(*server, ctx)
 	if err != nil {
@@ -80,6 +97,15 @@ type ChangePasswordRequest struct {
 	NewPassword string `json:"new_password" binding:"required" minLength:"8"`
 }
 
+// @Summary		Change Password
+// @Description	Change Password
+// @Tags			Profile
+// @Accept			json
+// @Produce		json
+// @Param			input	body		ChangePasswordRequest	true	"Change Password"
+// @Success		200		{object}	interface{}
+// @Router			/api/profile/change_password [put]
+// @Security		BearerAuth
 func (server *Server) ChangePassword(ctx *gin.Context) {
 	userId, err := getUserFromContext(*server, ctx)
 	if err != nil {
