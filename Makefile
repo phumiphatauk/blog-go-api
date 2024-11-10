@@ -40,7 +40,7 @@ migrate:
 migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
 
-## migrateup1: Apply the next migration
+## migrateup_no: Apply the next migration
 migrateup_no:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up $(no)
 
@@ -48,7 +48,7 @@ migrateup_no:
 migratedown:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down
 
-## migratedown1: Rollback the previous migration
+## migratedown_no: Rollback the previous migration
 migratedown_no:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down $(no)
 
@@ -109,4 +109,4 @@ restart: stop run
 swag:
 	swag init
 
-.PHONY: postgres minio postgresdown migrate migrateup migrateup1 migratedown migratedown1 sqlc build run stop restart swag
+.PHONY: postgres minio postgresdown migrate migrateup migrateup_no migratedown migratedown_no migrate_version migrate_goto migrate_force sqlc build run stop restart swag
